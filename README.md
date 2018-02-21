@@ -1,0 +1,3 @@
+# Farkle
+
+Only roll and score functions avalible now...
