@@ -92,6 +92,47 @@ def game_test():
     s, d = score_all(d)
     print(s, d)
 
+def game_full():
+    dice = roll()
+    print(dice)
+    score, d = score_all(dice)
+    print('score: ' + str(score))
+    if score == 0:
+        print('round score: 0')
+        return 0
+
+    while True:
+        s = 0
+        case = input()
+        if case == 'stop':
+            score += s
+            break
+        elif case == 'fix':
+            print('enter dices: ', end='')
+            fix = ms.Multiset(input())
+            if d.issuperset(fix):
+                print('bad input')
+                continue
+            dice.difference_update(fix)
+            print('fixed: ' + str(fix))
+            s = score_all(fix)[0]
+            if len(dice) == 0:
+                dice = roll()
+            else:
+                dice = roll(len(dice))
+            print(dice)
+            s = score_all(dice)[0]
+            if s == 0:
+                score = 0
+                print('fire!')
+                break
+            else:
+                print('score: ' + str(s))
+                score += s
+        else:
+            print('bad input')
+    print('round score: ' + str(score))
+
 if __name__ == "__main__":
-    game_test()
+    game_full()
 
