@@ -110,8 +110,13 @@ def game_full():
         elif case == 'fix':
             print('enter dices: ', end='')
             fix = ms.Multiset(input())
-            if d.issuperset(fix):
-                print('bad input')
+            bad_select = False # TODO rewrite with exceptions
+            for i in fix:
+                if i in d:
+                    bad_select = True
+                    break
+            if bad_select:
+                print('bad input, after "fix" you must enter dice with value!')
                 continue
             dice.difference_update(fix)
             print('fixed: ' + str(fix))
@@ -121,7 +126,7 @@ def game_full():
             else:
                 dice = roll(len(dice))
             print(dice)
-            s = score_all(dice)[0]
+            s, d = score_all(dice)
             if s == 0:
                 score = 0
                 print('fire!')
@@ -130,7 +135,7 @@ def game_full():
                 print('score: ' + str(s))
                 score += s
         else:
-            print('bad input')
+            print('bad input, use: "fix" or "stop" command')
     print('round score: ' + str(score))
 
 if __name__ == "__main__":
