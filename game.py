@@ -18,7 +18,7 @@ def score_single(diceset):
     score += diceset['5']*50
     diceset.discard('1')
     diceset.discard('5')
-    return (score, diceset)
+    return score, diceset
 
 
 def score_sets(d):
@@ -32,7 +32,7 @@ def score_sets(d):
             if i[0] == '1':
                 s *= 10
             dd.discard(i[0])
-    return (s, dd)
+    return s, dd
 
 
 def score_uniq(d):
@@ -46,7 +46,7 @@ def score_uniq(d):
                 if i[0] == '1':
                     s *= 10
                 return(s, d.difference(i[0]*j))
-    return (0, d)
+    return 0, d
 
 
 def score_all(d):
@@ -56,7 +56,7 @@ def score_all(d):
     sumall += s
     s, d = score_single(d)
     sumall += s
-    return (sumall, d)
+    return sumall, d
 
 
 def game():
