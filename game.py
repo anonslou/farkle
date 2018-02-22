@@ -2,13 +2,16 @@
 import random as rnd
 import multiset as ms
 
+
 def roll(dice_count=6):
     diceset = ''
     for i in range(dice_count):
-        diceset += str(rnd.randint(1,6))
+        diceset += str(rnd.randint(1, 6))
     return ms.Multiset(diceset)
 
+
 def score_single(diceset):
+    diceset = diceset.copy()
     if len(diceset) <= 0:
         return (0, diceset)
     score = diceset['1']*100
@@ -17,9 +20,10 @@ def score_single(diceset):
     diceset.discard('5')
     return (score, diceset)
 
+
 def score_sets(d):
     if len(d) < 3:
-        return (0, d)
+        return (0, d.copy())
     s = 0
     dd = d.copy()
     for i in d.items():
@@ -30,11 +34,13 @@ def score_sets(d):
             dd.discard(i[0])
     return (s, dd)
 
+
 def score_uniq(d):
+    d = d.copy()
     if len(d) < 4:
         return (0, d)
     for i in d.items():
-        for j in range(6,3,-1):
+        for j in range(6, 3, -1):
             if i[1] == j:
                 s = int(i[0])*100 * pow(2, j-3)
                 if i[0] == '1':
@@ -42,7 +48,9 @@ def score_uniq(d):
                 return(s, d.difference(i[0]*j))
     return (0, d)
 
+
 def score_all(d):
+    d = d.copy()
     sumall, d = score_uniq(d)
     s, d = score_sets(d)
     sumall += s
@@ -50,9 +58,10 @@ def score_all(d):
     sumall += s
     return (sumall, d)
 
+
 def game():
     counter = 100000
-    for j in range(6,0,-1):
+    for j in range(6, 0, -1):
         score = 0
         zero = 0
         for i in range(counter):
@@ -64,6 +73,7 @@ def game():
         print(j, end='\t')
         print('avg: ' + str(score/counter), end='\t')
         print('fail: ' + str(zero*100/counter))
+
 
 def game2():
     counter = 10000
@@ -86,11 +96,13 @@ def game2():
     print(fail*100/success)
     print(avg/success)
 
+
 def game_test():
     d = roll()
     print(d)
     s, d = score_all(d)
     print(s, d)
+
 
 def game_full():
     dice = roll()
@@ -110,7 +122,7 @@ def game_full():
         elif case == 'fix':
             print('enter dices: ', end='')
             fix = ms.Multiset(input())
-            bad_select = False # TODO rewrite with exceptions
+            bad_select = False  # TODO rewrite with exceptions
             for i in fix:
                 if i in d:
                     bad_select = True
@@ -119,7 +131,7 @@ def game_full():
                 print('bad input, after "fix" you must enter dice with value!')
                 continue
             dice.difference_update(fix)
-            print('fixed: ' + str(fix)) # TODO не менять две строки местами
+            print('fixed: ' + str(fix))  # TODO не менять две строки местами
             s = score_all(fix)[0]       # TODO не менять две строки местами
             if len(dice) == 0:
                 dice = roll()
@@ -138,6 +150,6 @@ def game_full():
             print('bad input, use: "fix" or "stop" command')
     print('round score: ' + str(score))
 
-if __name__ == "__main__":
-    game_full()
 
+if __name__ == '__main__':
+    game_full()
