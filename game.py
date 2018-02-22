@@ -119,8 +119,8 @@ def game_full():
                 print('bad input, after "fix" you must enter dice with value!')
                 continue
             dice.difference_update(fix)
-            print('fixed: ' + str(fix))
-            s = score_all(fix)[0]
+            print('fixed: ' + str(fix)) # TODO не менять две строки местами
+            s = score_all(fix)[0]       # TODO не менять две строки местами
             if len(dice) == 0:
                 dice = roll()
             else:
