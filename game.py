@@ -75,28 +75,6 @@ def game():
         print('fail: ' + str(zero*100/counter))
 
 
-def game2():
-    counter = 10000
-    success = 0
-    avg = 0
-    fail = 0
-    for i in range(counter):
-        ss = 0
-        d = roll(6)
-        s, d = score_all(d)
-        if s == 50 or s == 100:
-            ss = s
-            d = roll(5)
-            s, d = score_all(d)
-            if s > 0:
-                avg += ss + s
-                success += 1
-            else:
-                fail += 1
-    print(fail*100/success)
-    print(avg/success)
-
-
 def game_test():
     d = roll()
     print(d)
@@ -124,22 +102,12 @@ def game_full():
             inp = input()
             bad_select = False  # TODO rewrite all input checks with exceptions
             for i in inp:
-                if i not in ('1','2','3','4','5','6'):
+                if i not in dice.difference(d):
                     bad_select = True
             if bad_select:
                 print('bad input, after "fix" you must enter dice with value!')
                 continue
             fix = ms.Multiset(inp)
-            for i in fix:
-                if i in d:
-                    bad_select = True
-                    break
-            if bad_select:
-                print('bad input, after "fix" you must enter dice with value!')
-                continue
-            if not dice.issuperset(fix):
-                print('bad input, after "fix" you must enter dice with value!')
-                continue
             dice.difference_update(fix)
             s = score_all(fix)[0]
             print('fixed: ' + str(fix))
