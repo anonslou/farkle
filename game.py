@@ -104,6 +104,7 @@ def game_full():
             for i in inp:
                 if i not in dice.difference(d):
                     bad_select = True
+                    break
             if bad_select:
                 print('bad input, after "fix" you must enter dice with value!')
                 continue
