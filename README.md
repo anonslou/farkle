@@ -1,5 +1,5 @@
 # Farkle
-
+Minigame from Kingdom Come: Deliverance
 Only roll and score functions avalible now...
 
 ## running...
